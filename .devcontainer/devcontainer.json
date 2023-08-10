@@ -1,0 +1,61 @@
+{
+  "build": { 
+    "dockerfile": "env/Dockerfile" 
+  },
+
+  "forwardPorts": [3000],
+
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "ms-vscode.cpptools-themes",
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "NathanJ.cppcheck-plugin",
+        "twxs.cmake",
+        "josetr.cmake-language-support-vscode",
+        "ms-vscode.cmake-tools",
+        "brobeson.ctest-lab",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.isort",
+        "donjayamanne.python-extension-pack",
+        "donjayamanne.python-environment-manager",
+        "mhutchie.git-graph"
+      ]
+    }
+  },
+
+  "mounts":[
+    // Mount / under /host
+    "source=/,target=/host,type=bind,consistency=cached",
+    // Mount user ssh keys
+    "source=${localEnv:HOME}/.ssh,target=/home/dev/.ssh,type=bind,consistency=cached", 
+    // Mount host SSL certs
+    "source=/etc/ssl/certs,target=/etc/ssl/certs,type=bind,consistency=cached",
+    // Bash history
+    "source=bashhistory,target=/commandhistory,type=volume"
+  ],
+
+  "remoteEnv": {
+    "PATH":"${containerEnv:PATH}:${containerWorkspaceFolder}/build",
+
+    // Git
+    "GIT_SSH_COMMAND":"ssh -o KexAlgorithms=+diffie-hellman-group1-sha1",
+    "GIT_SSL_NO_VERIFY":"1",
+
+    // Use display for OpenGL
+    "LIBGL_ALWAYS_SOFTWARE":"1"
+  },
+
+  "runArgs": [
+    "--hostname","dev-env",
+
+    // Use display for OpenGL
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "-e", "DISPLAY=unix${localEnv:DISPLAY}"
+  ]
+}
