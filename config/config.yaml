@@ -1,0 +1,14 @@
+hydra:
+  job:
+    chdir: True
+
+defaults:
+  - _self_
+  - db: mysql
+  - site:
+    - amazon
+    - fb
+    - google
+
+domain: localhost
+
