@@ -1,0 +1,15 @@
+domain: localhost
+db:
+  driver: mysql
+  user: root
+  pass: 1234
+site:
+  amazon:
+    domain: amazon.com
+    port: 80
+  fb:
+    domain: facebook.com
+    port: 443
+  google:
+    domain: google.com
+    port: 8080
