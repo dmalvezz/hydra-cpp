@@ -1,6 +1,6 @@
 {
   "build": { 
-    "dockerfile": "env/Dockerfile" 
+    "dockerfile": "environment/Dockerfile" 
   },
 
   "forwardPorts": [3000],
